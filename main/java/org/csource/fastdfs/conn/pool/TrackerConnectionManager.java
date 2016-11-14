@@ -38,19 +38,8 @@ public final class TrackerConnectionManager {
 	public ConnectionSupplier getNewConnection(InetSocketAddress inetSockAddr) {
 		ConnectionSupplier connectionSupplier = null;
 		try {
-			int retryCount = 3;
-			boolean valid = false;
-			do {
-				connectionSupplier = fastDFSConnectionPool.borrowObject(inetSockAddr);
-				connectionSupplier.setReturnConn(false);
-				valid = connectionSupplier.isValid();
-				if (valid) {
-					return connectionSupplier;
-				} else {
-					connectionSupplier.close();
-				}
-				retryCount--;
-			} while (!valid && retryCount > 0);
+			connectionSupplier = fastDFSConnectionPool.borrowObject(inetSockAddr);
+			connectionSupplier.setReturnConn(false);
 		} catch (Exception e) {
 			logger.error("borrow fastdfs connection error:-->"+inetSockAddr, e);
 		}
