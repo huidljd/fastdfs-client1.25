@@ -81,8 +81,6 @@ public abstract class AbstractConnectionSupplier implements ConnectionSupplier {
 				return ProtoCommon.activeTest(inputStream_,outputStream_);
 			} catch (IOException e) {
 				logger.error("valid connection error : -->"+inetSockAddr, e);
-			} finally {
-				ProtoCommon.closeQuietly(socket);
 			}
 		}
 		return false;
